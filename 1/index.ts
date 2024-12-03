@@ -23,11 +23,6 @@ const preprocessLists = (arr1: number[], arr2: number[]) => {
   const sorted1 = sortAscending(arr1);
   const sorted2 = sortAscending(arr2);
 
-  const len = sorted1.length;
-  if (len !== sorted2.length) {
-    throw new Error("Arrays must be of equal length");
-  }
-
   return [sorted1, sorted2];
 };
 
@@ -68,6 +63,10 @@ export const calculatePart2 = (arr1: number[], arr2: number[]) => {
 
 if (require.main === module) {
   const input = loadInput("./1/input");
+
+  if (input[0].length !== input[1].length) {
+    throw new Error("Arrays must be of equal length");
+  }
 
   const result1 = calculatePart1(...input);
   const result2 = calculatePart2(...input);

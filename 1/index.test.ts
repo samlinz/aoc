@@ -1,11 +1,12 @@
 import { test, describe, expect } from "@jest/globals";
 import { calculatePart1, calculatePart2, loadInput } from ".";
+import path from "node:path";
 
-const file = "./1/testinput";
+const file = path.join(__dirname, "testinput");
 const arr1 = [3, 4, 2, 1, 3, 3];
 const arr2 = [4, 3, 5, 3, 9, 3];
 
-describe("1", () => {
+describe("Day 1", () => {
   test("load input", () => {
     const input = loadInput(file);
     expect(input).toEqual([arr1, arr2]);

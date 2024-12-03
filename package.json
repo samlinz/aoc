@@ -25,5 +25,6 @@
     "typecheck": "npx tsc --noEmit",
     "test": "npx jest",
     "test:watch": "npx jest --watch"
-  }
+  },
+  "packageManager": "yarn@4.5.3"
 }

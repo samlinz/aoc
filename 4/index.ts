@@ -1,6 +1,6 @@
 import { isMain, loadDayInput } from "../shared";
 
-export const createWordDataStructure = (input: string) => {
+export const preprocess1 = (input: string) => {
   const textRows = input.split("\n").map((x) => x.trim());
   const cellRows: string[][] = [];
 
@@ -93,8 +93,51 @@ export const createWordDataStructure = (input: string) => {
   return allSeries;
 };
 
+export const calculatePart2 = (input: string) => {
+  const textRows = input.split("\n").map((x) => x.trim());
+  const cellRows: string[][] = [];
+
+  for (const textRow of textRows) {
+    const cells = textRow.split("");
+    cellRows.push(cells);
+  }
+
+  const w = cellRows[0].length;
+  const h = cellRows.length;
+
+  const isXmas = (x: number, y: number) => {
+    const value = cellRows[y][x];
+
+    if (value !== "A") return false;
+
+    const directions = [
+      [y - 1, x - 1, y + 1, x + 1],
+      [y - 1, x + 1, y + 1, x - 1],
+    ];
+
+    for (const [y1, x1, y2, x2] of directions) {
+      const d1 = cellRows[y1]?.[x1];
+      const d2 = cellRows[y2]?.[x2];
+
+      if (!((d1 === "M" && d2 === "S") || (d1 === "S" && d2 === "M")))
+        return false;
+    }
+
+    return true;
+  };
+
+  let total = 0;
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      if (isXmas(x, y)) total += 1;
+    }
+  }
+
+  return total;
+};
+
 export const calculatePart1 = (input: string) => {
-  const series = createWordDataStructure(input);
+  const series = preprocess1(input);
 
   let total = 0;
   for (const s of series) {
@@ -110,7 +153,7 @@ if (isMain(module)) {
   const input = loadDayInput(__dirname);
 
   const result1 = calculatePart1(input);
-  // const result2 = calculatePart2(input);
+  const result2 = calculatePart2(input);
   console.log("Part 1: " + result1);
-  // console.log("Part 2: " + result2);
+  console.log("Part 2: " + result2);
 }

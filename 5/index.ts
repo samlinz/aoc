@@ -73,16 +73,14 @@ export const isUpdateValid = (lookupAfter: Lookup) => (update: Update) => {
   return true;
 };
 
-const moveInvalidCell = (
+const swapInvalidCells = (
   update: Update,
   currentPosition: number,
   invalidPosition: number
 ) => {
-  const invalidCell = update[invalidPosition];
-
   const newUpdate = [...update];
-  newUpdate.splice(invalidPosition, 1);
-  newUpdate.splice(currentPosition + 1, 0, invalidCell);
+  newUpdate[invalidPosition] = update[currentPosition];
+  newUpdate[currentPosition] = update[invalidPosition];
   return newUpdate;
 };
 
@@ -98,9 +96,9 @@ export const mangleToValidUpdate =
       for (let j = 0; j < i; j++) {
         const otherCell = possiblyFixedUpdate[j];
         if (lookupAfter.get(cell)?.has(otherCell)) {
-          possiblyFixedUpdate = moveInvalidCell(possiblyFixedUpdate, i, j);
+          possiblyFixedUpdate = swapInvalidCells(possiblyFixedUpdate, i, j);
           wasModified = true;
-          i = -1; // Restart the outer loop
+          i = -1;
           break;
         }
       }

@@ -34,3 +34,56 @@ export const reverseVec2 = (vec: Vec2): Vec2 => ({
   x2: vec.x1,
   y2: vec.y1,
 });
+
+export const permutations = <T>(arr: T[]): T[][] => {
+  if (arr.length === 0) return [[]];
+  const [first, ...rest] = arr;
+  const perms = permutations(rest);
+  return perms.flatMap((perm) =>
+    Array.from({ length: perm.length + 1 }, (_, i) => [
+      ...perm.slice(0, i),
+      first,
+      ...perm.slice(i),
+    ])
+  );
+};
+
+// export const combinations = <T>(length: number, operators: T[]): T[][] => {
+//   const result: T[][] = [];
+
+//   const generate = (current: T[], depth: number) => {
+//     if (depth === length) {
+//       result.push([...current]);
+//       return;
+//     }
+
+//     for (const operator of operators) {
+//       current.push(operator);
+//       generate(current, depth + 1);
+//       current.pop();
+//     }
+//   };
+
+//   generate([], 0);
+//   return result;
+// };
+
+// export const
+
+export const min = (arr: number[]) => Math.min(...arr);
+export const max = (arr: number[]) => Math.max(...arr);
+
+export const createAllPossiblePairings = <T>(array: T[]): [T, T][] => {
+  const pairings: [T, T][] = [];
+
+  for (let i = 0; i < array.length; i++) {
+    for (let j = 0; j < array.length; j++) {
+      if (i !== j) {
+        // Avoid pairing an element with itself
+        pairings.push([array[i], array[j]]);
+      }
+    }
+  }
+
+  return pairings;
+};

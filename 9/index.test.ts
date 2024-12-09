@@ -57,7 +57,7 @@ describe("Day 7", () => {
     expect(calculatePart1(testInput1)).toBe(1928);
   });
 
-  // test("Calculate part 2", () => {
-  //   expect(calculatePart2(testInput1)).toBe(34);
-  // });
+  test("Calculate part 2", () => {
+    expect(calculatePart2(testInput1)).toBe(2858);
+  });
 });

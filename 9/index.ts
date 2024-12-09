@@ -37,14 +37,18 @@ export const parseInput = (input: string) => {
   return arr;
 };
 
-// const print = (arr: (number | undefined)[]) => {
-//   for (let i = 0; i < arr.length; i++) {
-//     const v = arr[i];
-//     process.stdout.write(v === undefined ? "." : v.toString());
-//     process.stdout.write("|");
-//   }
-//   process.stdout.write("\n");
-// };
+const checksum = (arr: (number | undefined)[]) => {
+  const len = arr.length;
+  let sum = 0;
+
+  for (let i = 0; i < len; i++) {
+    const v = arr[i];
+    if (v === undefined) break;
+    sum += v * i;
+  }
+
+  return sum;
+};
 
 export const calculatePart1 = (input: string) => {
   const arr = parseInput(input);
@@ -71,15 +75,59 @@ export const calculatePart1 = (input: string) => {
     arr[i] = undefined;
   }
 
-  // Count checksum
-  let sum = 0;
-  for (let i = 0; i < len; i++) {
-    const v = arr[i];
-    if (v === undefined) break;
-    sum += v * i;
+  return checksum(arr);
+};
+
+export const calculatePart2 = (input: string) => {
+  const arr = parseInput(input);
+
+  // const startPoints = [];
+  const blocks: { start: number; len: number }[] = [];
+  // type EmptyBlock = {
+  //   start: number;
+  //   len: number;
+  // };
+
+  // duplicate travelsal but reusing old parser jne jne
+  let s = 0;
+  let v = arr[0];
+  for (let i = 1; i < arr.length; i++) {
+    const v2 = arr[i];
+    if (v2 === undefined && v !== undefined) {
+      // end of block
+      blocks.push({
+        start: s,
+        len: i - s,
+      });
+    }
+    if (v2 !== undefined && v === undefined) {
+      // start of block
+      s = i;
+    }
+    v = v2;
   }
 
-  return sum;
+  let result = [...arr];
+  let x = 0;
+  outer: for (let i = len - 1; i >= 0; i--) {
+    const value = arr[i];
+
+    if (value === undefined) continue;
+
+    while (arr[x] !== undefined) {
+      x++;
+
+      if (x > i) {
+        // All processed
+        break outer;
+      }
+    }
+
+    // arr[x] = value;
+    // arr[i] = undefined;
+  }
+
+  return checksum(arr);
 };
 
 if (isMain(module)) {
@@ -88,3 +136,12 @@ if (isMain(module)) {
   const result1 = calculatePart1(input);
   console.log("Part 1: " + result1);
 }
+
+const print = (arr: (number | undefined)[]) => {
+  for (let i = 0; i < arr.length; i++) {
+    const v = arr[i];
+    process.stdout.write(v === undefined ? "." : v.toString());
+    process.stdout.write("|");
+  }
+  process.stdout.write("\n");
+};

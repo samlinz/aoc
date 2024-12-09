@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@jest/globals";
-import { calculatePart1, parseInput } from ".";
+import { calculatePart1, calculatePart2, parseInput } from ".";
 import { loadTestInput } from "../shared";
 
 const testInput1 = loadTestInput(__dirname);

@@ -1,5 +1,4 @@
-import { isUpdateValid } from "../5";
-import { isMain, loadDayInput, loadTestInput } from "../shared";
+import { isMain, loadDayInput } from "../shared";
 
 // For all practical purposes, this means that a hiking trail is
 // - any path that starts at height 0, ends at height 9
@@ -24,13 +23,6 @@ const dirMap: Record<Dir, [number, number]> = {
   [Dir.Left]: [-1, 0],
   [Dir.Right]: [1, 0],
 };
-
-// const dirArray = [
-//   dirMap[Dir.Up],
-//   dirMap[Dir.Down],
-//   dirMap[Dir.Left],
-//   dirMap[Dir.Right],
-// ];
 
 const parseInput = (input: string) => {
   const map: number[][] = [];
@@ -171,11 +163,33 @@ export const calculatePart1 = (input: string) => {
   return totalScore;
 };
 
-const calculatePart2 = (input: string) => {};
+export const calculatePart2 = (input: string) => {
+  const { map, w, h, tilesByNumber } = parseInput(input);
+  const trailHeads = tilesByNumber.get(0)!;
+
+  let totalScore = 0;
+  for (const trailHead of trailHeads) {
+    const paths = findPaths(
+      map,
+      undefined,
+      undefined,
+      trailHead[0],
+      trailHead[1],
+      w,
+      h,
+      [],
+      new Set()
+    );
+
+    // Just count the distinct paths to get the rating, otherwise identical to part 1
+    totalScore += paths.length;
+  }
+
+  return totalScore;
+};
 
 if (isMain(module)) {
   const input = loadDayInput(__dirname);
-  // const input = loadTestInput(__dirname);
 
   const result1 = calculatePart1(input);
   const result2 = calculatePart2(input);

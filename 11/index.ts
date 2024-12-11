@@ -1,6 +1,4 @@
 import { isMain, loadDayInput } from "../shared";
-import fs from "node:fs";
-import regression from "regression";
 
 // If the stone is engraved with the number 0, it is replaced by a stone engraved with the number 1.
 // If the stone is engraved with a number that has an even number of digits, it is replaced by two stones. The left half of the digits are engraved on the new left stone, and the right half of the digits are engraved on the new right stone. (The new numbers don't keep extra leading zeroes: 1000 would become stones 10 and 0.)
@@ -41,85 +39,45 @@ export const run = (numbers: number[], n: number) => {
   return current;
 };
 
-export const run2 = (numbers: number[], n: number) => {
-  let current = [...numbers];
-  // let len = [];
-  let values: [number, number][] = [];
-
-  for (let i = 0; i < n; i++) {
-    current = getNextState(current);
-    // console.log(current.length);
-    // len.push(current.length);
-    values.push([i + 1, current.length]);
+type Cache = Map<number, Map<number, number>>;
+export const run2 = (
+  mem: Cache,
+  numbers: number[],
+  depth: number,
+  stopDepth: number
+) => {
+  if (depth === stopDepth) {
+    return numbers.length;
   }
 
-  // let y: [number, number][] = [];
-  // for (let i = 0; i < current.length; i++) {
-  //   // console.log(i, len[i]);
-  //   y.push([i, current[i]]);
-  // }
+  let totalLength = 0;
 
-  // Input array
-  // const dataArray = [1, 4, 9, 16, 25]; // e.g., y = x^2
-  // const data = current.map((y, x) => [x + 1, y]) as [number, number][];
+  for (let i = 0; i < numbers.length; i++) {
+    const nextStones = getNextStone(numbers[i]);
 
-  // Fit a quadratic curve
-  const result1 = regression.linear(values).predict(75);
+    for (const nextStone of nextStones) {
+      let m = mem.get(nextStone);
+      if (!m) {
+        const m2 = new Map<number, number>();
+        mem.set(nextStone, m2);
+        m = m2;
+      }
 
-  const result2 = regression.polynomial(values).predict(75);
+      const c = m.get(depth);
+      if (c !== undefined) {
+        totalLength += c;
+        continue;
+      }
 
-  const result3 = regression.exponential(values).predict(75);
-  const result4 = regression.power(values).predict(75);
+      const result = run2(mem, [nextStone], depth + 1, stopDepth);
 
-  console.log(result1, result2, result3, result4);
-  // const fit = exponentialFit(y);
-  // console.log(fit);
+      m.set(depth, result);
+      totalLength += result;
+    }
+  }
 
-  return current;
+  return totalLength;
 };
-
-// function exponentialFit(data: [number, number][]) {
-//   let a = 1,
-//     b = 1; // Initial guesses
-//   const learningRate = 0.01;
-//   const iterations = 1000;
-
-//   for (let iter = 0; iter < iterations; iter++) {
-//     let da = 0,
-//       db = 0;
-
-//     for (const [x, y] of data) {
-//       const yPred = a * Math.exp(b * x);
-//       const error = y - yPred;
-//       da += -2 * error * Math.exp(b * x);
-//       db += -2 * error * a * x * Math.exp(b * x);
-//     }
-
-//     a -= (learningRate * da) / data.length;
-//     b -= (learningRate * db) / data.length;
-//   }
-
-//   return { a, b };
-// }
-// function linearRegression(data) {
-//   const n = data.length;
-//   let sumX = 0,
-//     sumY = 0,
-//     sumXY = 0,
-//     sumXX = 0;
-
-//   for (const [x, y] of data) {
-//     sumX += x;
-//     // sumY += y;
-//     // sumXY += x * y;
-//     // sumXX += x * x;
-//   }
-
-//   const slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
-//   const intercept = (sumY - slope * sumX) / n;
-
-//   return { slope, intercept };
-// }
 
 const calculatePart1 = (input: string) => {
   const numbers = parseInput(input);
@@ -127,17 +85,17 @@ const calculatePart1 = (input: string) => {
   return run(numbers, 25).length;
 };
 
-const calculatePart2 = (input: string) => {
+export const calculatePart2 = (input: string) => {
   const numbers = parseInput(input);
-
-  return run2(numbers, 30).length;
+  const mem = new Map<number, Map<number, number>>();
+  return run2(mem, numbers, 0, 75);
 };
 
 if (isMain(module)) {
   const input = loadDayInput(__dirname);
 
-  // const result1 = calculatePart1(input);
-  // console.log("Part 1: " + result1);
+  const result1 = calculatePart1(input);
+  console.log("Part 1: " + result1);
 
   const result2 = calculatePart2(input);
   console.log("Part 2: " + result2);

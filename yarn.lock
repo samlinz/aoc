@@ -1189,12 +1189,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^22.10.1":
+"@types/node@npm:*":
   version: 22.10.1
   resolution: "@types/node@npm:22.10.1"
   dependencies:
     undici-types: "npm:~6.20.0"
   checksum: 10c0/0fbb6d29fa35d807f0223a4db709c598ac08d66820240a2cd6a8a69b8f0bc921d65b339d850a666b43b4e779f967e6ed6cf6f0fca3575e08241e6b900364c234
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^22.10.2":
+  version: 22.10.2
+  resolution: "@types/node@npm:22.10.2"
+  dependencies:
+    undici-types: "npm:~6.20.0"
+  checksum: 10c0/2c7b71a040f1ef5320938eca8ebc946e6905caa9bbf3d5665d9b3774a8d15ea9fab1582b849a6d28c7fc80756a62c5666bc66b69f42f4d5dafd1ccb193cdb4ac
+  languageName: node
+  linkType: hard
+
+"@types/regression@npm:^2.0.6":
+  version: 2.0.6
+  resolution: "@types/regression@npm:2.0.6"
+  checksum: 10c0/c188d7cb023c9c77436b3522eb2ffd0f92e92c36230e591e13b0c45dc69c77d820498ecd6a2b4208ea3cb81df5771e24101732c6b69a5e30d7897406c5f92c18
   languageName: node
   linkType: hard
 
@@ -1382,11 +1398,13 @@ __metadata:
   dependencies:
     "@eslint/js": "npm:^9.16.0"
     "@jest/globals": "npm:^29.7.0"
-    "@types/node": "npm:^22.10.1"
+    "@types/node": "npm:^22.10.2"
+    "@types/regression": "npm:^2.0.6"
     eslint: "npm:^9.16.0"
     globals: "npm:^15.13.0"
     jest: "npm:^29.7.0"
     prettier: "npm:^3.4.1"
+    regression: "npm:^2.0.1"
     ts-jest: "npm:^29.2.5"
     ts-node: "npm:^10.9.2"
     tsc: "npm:^2.0.4"
@@ -4013,6 +4031,13 @@ __metadata:
   version: 18.3.1
   resolution: "react-is@npm:18.3.1"
   checksum: 10c0/f2f1e60010c683479e74c63f96b09fb41603527cd131a9959e2aee1e5a8b0caf270b365e5ca77d4a6b18aae659b60a86150bb3979073528877029b35aecd2072
+  languageName: node
+  linkType: hard
+
+"regression@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "regression@npm:2.0.1"
+  checksum: 10c0/ad3ca209409ed6e3ce1da64ff9779f616c1ef5cfdfc0785681aa670a046d674c8dcdaeac2a7c41f9cb3c22374051246d675e79c2ba3885deb6c9f9aadc756cd8
   languageName: node
   linkType: hard
 

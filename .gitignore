@@ -3,3 +3,4 @@ node_modules/
 .yarnrc.yml
 output.txt
 output
+test.ts

@@ -87,3 +87,6 @@ export const createAllPossiblePairings = <T>(array: T[]): [T, T][] => {
 
   return pairings;
 };
+
+export const inBounds = (x: number, y: number, width: number, height: number) =>
+  x >= 0 && x < width && y >= 0 && y < height;

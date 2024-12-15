@@ -4,7 +4,7 @@ import { loadTestInput } from "../shared";
 
 const input = loadTestInput(__dirname);
 
-describe("Day 11", () => {
+describe("Day 12", () => {
   test("Calculate part 1", () => {
     expect(calculatePart1(input)).toBe(1930);
   });

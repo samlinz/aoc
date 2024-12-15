@@ -1,11 +1,4 @@
-import { Dir } from "node:fs";
-import {
-  inBounds,
-  isMain,
-  loadDayInput,
-  loadTestInput,
-  loadTextFile,
-} from "../shared";
+import { inBounds, isMain, loadDayInput } from "../shared";
 
 export const parseInput = (input: string) => {
   const rows = input.split("\n");

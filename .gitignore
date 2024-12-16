@@ -4,3 +4,4 @@ node_modules/
 output.txt
 output
 test.ts
+venv/

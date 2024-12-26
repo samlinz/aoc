@@ -90,3 +90,41 @@ export const createAllPossiblePairings = <T>(array: T[]): [T, T][] => {
 
 export const inBounds = (x: number, y: number, width: number, height: number) =>
   x >= 0 && x < width && y >= 0 && y < height;
+
+export enum Move {
+  Up,
+  Down,
+  Left,
+  Right,
+}
+
+export type Direction = Move;
+export const horizontalDirections = [Move.Left, Move.Right];
+export const verticalDirections = [Move.Up, Move.Down];
+
+export const directionsMap: Record<Move, [number, number]> = {
+  [Move.Up]: [0, -1],
+  [Move.Down]: [0, 1],
+  [Move.Left]: [-1, 0],
+  [Move.Right]: [1, 0],
+};
+
+export const horizontalDirectionsMap = horizontalDirections.map(
+  (d) => directionsMap[d]
+);
+export const verticalDirectionsMap = verticalDirections.map(
+  (d) => directionsMap[d]
+);
+
+export const directionsList = [Move.Up, Move.Down, Move.Left, Move.Right];
+export const directionsMoveList = directionsList.map((d) => directionsMap[d]);
+
+export type CoordLookup = Map<number, Set<number>>;
+
+export const coordLookupSet = (lookup: CoordLookup, x: number, y: number) => {
+  if (!lookup.has(x)) {
+    lookup.set(x, new Set());
+  }
+
+  lookup.get(x)?.add(y);
+};

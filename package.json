@@ -28,5 +28,9 @@
     "test": "npx jest",
     "test:watch": "npx jest --watch"
   },
-  "packageManager": "yarn@4.5.3"
+  "packageManager": "yarn@4.5.3",
+  "dependencies": {
+    "set.prototype.intersection": "^1.1.7",
+    "set.prototype.union": "^1.1.3"
+  }
 }

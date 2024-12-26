@@ -54,9 +54,7 @@ export const calculatePart1 = (input: string) => {
     m.costB = 1;
   });
   console.log(machines);
-  // const x = parseInput(input);
   const limit = 100;
-  // const range = Array.from({ length: 100 }, (_, i) => i);
 
   let i = 0;
   let total = 0;
@@ -66,7 +64,45 @@ export const calculatePart1 = (input: string) => {
       for (let b = 0; b < limit; b++) {
         const c = calc(a, b, m);
         if (c === 0) {
-          console.log("Found it", a, b);
+          min = cost(a, b, m);
+        }
+      }
+    }
+
+    if (min !== undefined) {
+      total += min;
+    }
+
+    i++;
+    if (i % 100 === 0) {
+      console.log(`${i}/${machines.length}`);
+    }
+  }
+
+  return total;
+};
+
+export const calculatePart2 = (input: string) => {
+  const machines = parseMachines(input);
+  const multiplier = 10000000000000;
+  machines.forEach((m) => {
+    m.costA = 3;
+    m.costB = 1;
+    m.targetX *= multiplier;
+    m.targetY *= multiplier;
+  });
+
+  let i = 0;
+  let total = 0;
+  for (const m of machines) {
+    // const safeDistance = 1000;
+    // const bufferValue = m.
+
+    let min: number | undefined = undefined;
+    for (let a = 0; a < limit; a++) {
+      for (let b = 0; b < limit; b++) {
+        const c = calc(a, b, m);
+        if (c === 0) {
           min = cost(a, b, m);
         }
       }
@@ -87,11 +123,10 @@ export const calculatePart1 = (input: string) => {
 
 if (isMain(module)) {
   const input = loadDayInput(__dirname);
-  // const input = loadTestInput(__dirname);
 
-  const result1 = calculatePart1(input);
-  console.log("Part 1: " + result1);
+  // const result1 = calculatePart1(input);
+  // console.log("Part 1: " + result1);
 
-  // const result2 = calculatePart2(input);
-  // console.log("Part 2: " + result2);
+  const result2 = calculatePart2(input);
+  console.log("Part 2: " + result2);
 }
